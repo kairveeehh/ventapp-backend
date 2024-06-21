@@ -1,18 +1,19 @@
 {
-  "name": "rant-backend",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "name": "vent",
   "scripts": {
-    "start": "node index.js"
+    "dev": "wrangler dev src/index.ts",
+    "deploy": "wrangler deploy --minify src/index.ts",
+    "db:generate": "drizzle-kit generate",
+    "db:up": "drizzle-kit up:sqlite"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
   "dependencies": {
-    "cors": "^2.8.5",
-    "dotenv": "^16.4.5",
-    "express": "^4.19.2",
-    "mongoose": "^8.4.3"
+    "@libsql/client": "^0.6.2",
+    "drizzle-orm": "^0.31.2",
+    "hono": "^4.4.6"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^4.20240529.0",
+    "drizzle-kit": "^0.22.7",
+    "wrangler": "^3.57.2"
   }
 }
