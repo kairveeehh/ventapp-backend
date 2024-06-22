@@ -1,12 +1,22 @@
 import { drizzle } from "drizzle-orm/d1";
 import { Hono } from "hono";
 import { rants } from "./db/schema";
+import { cors } from "hono/cors";
 
 export type ENV = {
   DB: D1Database;
 };
 
 const app = new Hono<{ Bindings: ENV }>();
+
+app.use(
+  "/rants/*",
+  cors({
+    origin: "https://ventapp-frontend-ypq5.vercel.app",
+    allowMethods: ["GET", "POST"],
+    credentials: true,
+  })
+);
 
 app
   .get("/rants", async (c: any) => {
@@ -24,8 +34,7 @@ app
 
     return c.json(result);
   })
-  .post("/rants",
-  async (c: any) => {
+  .post("/rants", async (c: any) => {
     const db = drizzle(c.env.DB);
 
     if (!db) {
